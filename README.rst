@@ -15,7 +15,7 @@ stock market execution over development, testing, paper, production ...
 A solution
 ==========
 
-Shamelessly inspired by the app_constant gem, constants aims to solve that
+Shamelessly inspired by the app_constants_ gem, constants aims to solve that
 problem (and that problem only).
 
 .ini file
@@ -34,7 +34,7 @@ specifically overridden in a section.
     just_for_me = 5
 
 To find out more about ini files and sections, check the Python standard
-library documention on http://docs.python.org/library/configparser.html.
+library configparser_ documention.
 
 Environment
 -----------
@@ -82,3 +82,5 @@ Values can also be accessed using the . operator (getattr)
 >>> consts.all
 1
 
+.. _app_constants: https://github.com/leonardoborges/app_constants
+.. _configparser: http://docs.python.org/library/configparser.html
