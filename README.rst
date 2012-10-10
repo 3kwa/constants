@@ -58,10 +58,10 @@ Most platform have a way to do that, in bash:
 
     export __CONSTANTS__=a_section
 
-.. _Instantiations:
+.. _Instantiation:
 
-Instantiations
---------------
+Instantiation
+-------------
 
 >>> import constants
 >>> consts = constants.Constants()
