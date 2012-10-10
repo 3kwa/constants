@@ -99,7 +99,9 @@ Values can also be accessed using the . operator (getattr)
 Installation
 ============
 
-constants is available on PyPI_ ...
+``constants`` is available on PyPI_ ...
+
+::
 
     pip install constants
 
