@@ -102,7 +102,7 @@ Warning
 
 "We are responsible adults" yet, inspired by Matthew Wilson's suggestion_ to
 raise an exception when an attempt is made to *change a constant*, ``constants``
-issues a warning_ ...
+issues warnings_ ...
 
 >>> import warnings
 
@@ -145,4 +145,4 @@ Installation
 .. _PyPI: http://pypi.python.org/pypi/constants
 .. _GitHub: https://github.com/3kwa/constants
 .. _suggestion: https://twitter.com/mw44118/status/256022281409658881
-.. _warning: http://docs.python.org/library/warnings.html
+.. _warnings: http://docs.python.org/library/warnings.html
