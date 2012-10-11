@@ -6,7 +6,7 @@ application runs in ... straightforward if not easy.
 
 >>> consts = Constants()
 
-Looks for an environement variable named __CONSTANTS__ whose value is used
+Looks for an environment variable named __CONSTANTS__ whose value is used
 to find out which section of the constants.ini file should be used.
 
 To find out more about ini files and sections, check the Python standard
@@ -67,7 +67,7 @@ class Constants(object):
 
     def get_environment(self):
         """
-        returns the value of the environement variable self.variable
+        returns the value of the environment variable self.variable
         """
         self.environment = os.environ[self.variable]
 
