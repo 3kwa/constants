@@ -1,45 +1,10 @@
 """
-constants.Constants
-
-Making dealing with application constants which change with the environment the
-application runs in ... straightforward if not easy.
-
->>> consts = Constants()
-
-Looks for an environment variable named __CONSTANTS__ whose value is used
-to find out which section of the constants.ini file should be used.
-
-To find out more about ini files and sections, check the Python standard
-library documention on http://docs.python.org/library/configparser.html.
-
->>> consts['something']
-'a_section_value'
-
-Values are cast into integer or float when possible.
-
->>> consts['all']
-1
-
-Values can also be accessed using the . operator.
-
->>> consts.all
-1
-
-The sensible defaults can be overwritten via the constructor...
-
->>> consts = Constants(variable='AN_ENVIRONMENT_VARIABLE',
-...                    filename='constants.cfg') # doctest: +SKIP
-
-... after instantiation but remember to call load().
-
->>> consts = Constants()
->>> consts.variable = 'AN_ENVIRONMENT_VARIABLE'
->>> consts.filename = 'constants.cfg'
->>> consts.load() # doctest: +SKIP
+constant.Constants - The simple way to deal with environment constants.
 """
 
 import os
 import ConfigParser
+import warnings
 
 
 VARIABLE = '__CONSTANTS__'
@@ -120,3 +85,21 @@ class Constants(object):
         except ValueError:
             pass
         return string
+
+    def __setitem__(self, item, value):
+        """
+        dict like assignment - warns when a constant is changed
+        """
+        if item in self.dict:
+            warnings.warn('{} changed to {}'.format(item, value))
+        self.dict[item] = value
+
+    def __setattr__(self, name, value):
+        """
+        attribute assignment - warns when a constant is changed
+        """
+        if hasattr(self, 'dict') and name in self.dict:
+            warnings.warn('{} changed to {}'.format(name, value))
+            self.dict[name] = value
+        else:
+            object.__setattr__(self, name, value)

@@ -95,6 +95,39 @@ Values can also be accessed using the . operator (getattr)
 >>> consts.all
 1
 
+.. _Warning:
+
+Warning
+-------
+
+"We are responsible adults" yet, inspired by Matthew Wilson's suggestion_ to
+raise an exception when an attempt is made to *change a constant*, ``constants``
+issues a warning_ ...
+
+>>> import warnings
+
+>>> with warnings.catch_warnings(record=True) as warning:
+...     # reassigning the constant all
+...     consts.all = 2
+
+>>> warning[0].message
+UserWarning('all changed to 2',)
+
+... and *changes the constant* anyway.
+
+>>> consts.all
+2
+
+It does so with the dict like assignment as well.
+
+>>> with warnings.catch_warnings(record=True) as warning:
+...     consts['something'] = 'a_new_value'
+
+>>> warning[0].message
+UserWarning('something changed to a_new_value',)
+
+>>> consts['something']
+'a_new_value'
 
 Installation
 ============
@@ -111,3 +144,5 @@ Installation
 .. _configparser: http://docs.python.org/library/configparser.html
 .. _PyPI: http://pypi.python.org/pypi/constants
 .. _GitHub: https://github.com/3kwa/constants
+.. _suggestion: https://twitter.com/mw44118/status/256022281409658881
+.. _warning: http://docs.python.org/library/warnings.html
