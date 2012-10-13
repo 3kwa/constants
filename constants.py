@@ -5,13 +5,30 @@ constant.Constants - The simple way to deal with environment constants.
 import os
 import ConfigParser
 import warnings
+import logging
+import functools
 
+
+logger = logging.getLogger(__name__)
+
+def debug(function):
+    """
+    logging debug decorator
+    """
+    @functools.wraps(function)
+    def wrapper(*args, **kvargs):
+        logger.debug('begin', extra={'method': function.__name__})
+        result = function(*args, **kvargs)
+        logger.debug('end', extra={'method': function.__name__})
+        return result
+    return wrapper
 
 VARIABLE = '__CONSTANTS__'
 FILENAME = 'constants.ini'
 
 class Constants(object):
 
+    @debug
     def __init__(self, variable=VARIABLE, filename=FILENAME):
         """
         variable is the name of the environment variable to read the
@@ -22,6 +39,7 @@ class Constants(object):
         self.filename = filename
         self.load()
 
+    @debug
     def load(self):
         """
         load the section self.variable from the config file self.filename
@@ -30,12 +48,14 @@ class Constants(object):
         self.read_config()
         self.load_dict()
 
+    @debug
     def get_environment(self):
         """
         returns the value of the environment variable self.variable
         """
         self.environment = os.environ[self.variable]
 
+    @debug
     def read_config(self):
         """
         returns a ConfigParser instance from self.filename
@@ -44,12 +64,18 @@ class Constants(object):
         with open(self.filename) as f:
             self.config.readfp(f)
 
+    @debug
     def load_dict(self):
         """
         load the config items into self.dict
         """
         self.dict = dict (self.config.items(self.environment))
-
+        logger.info('variable: %s, filename: %s, environment: %s, constants: %s',
+                    self.variable,
+                    self.filename,
+                    self.environment,
+                    self.dict,
+                    extra={'method': 'load'})
 
     def __getitem__(self, item):
         """
@@ -103,3 +129,4 @@ class Constants(object):
             self.dict[name] = value
         else:
             object.__setattr__(self, name, value)
+

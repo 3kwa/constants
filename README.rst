@@ -129,6 +129,49 @@ UserWarning('something changed to a_new_value',)
 >>> consts['something']
 'a_new_value'
 
+Logging
+-------
+
+``constants`` aims to be a good logging_ citizen, grafting a logger to the
+logging tree.
+
+All calls to the logger methods expose an extra logRecord key called ``method``.
+
+With the logging level set to INFO, it logs one and only one useful message.
+
+>>> import sys
+>>> import logging
+>>> logging.basicConfig(level=logging.INFO,
+...                     stream=sys.stdout,
+...                     format='%(levelname)s %(name)s.%(method)s %(message)s')
+>>> consts = constants.Constants() # doctest: +NORMALIZE_WHITESPACE
+INFO constants.load
+variable: __CONSTANTS__,
+filename: constants.ini,
+environment: a_section,
+constants: {'all': '1', 'something': 'a_section_value'}
+
+At DEBUG level it becomes a tad *noisier*.
+
+>>> logging.root.setLevel(logging.DEBUG)
+>>> consts = constants.Constants() # doctest: +NORMALIZE_WHITESPACE
+DEBUG constants.__init__ begin
+DEBUG constants.load begin
+DEBUG constants.get_environment begin
+DEBUG constants.get_environment end
+DEBUG constants.read_config begin
+DEBUG constants.read_config end
+DEBUG constants.load_dict begin
+INFO constants.load
+     variable: __CONSTANTS__,
+     filename: constants.ini,
+     environment: a_section,
+     constants: {'all': '1', 'something': 'a_section_value'}
+DEBUG constants.load_dict end
+DEBUG constants.load end
+DEBUG constants.__init__ end
+
+
 Installation
 ============
 
@@ -146,3 +189,4 @@ Installation
 .. _GitHub: https://github.com/3kwa/constants
 .. _suggestion: https://twitter.com/mw44118/status/256022281409658881
 .. _warnings: http://docs.python.org/library/warnings.html
+.. _logging: http://docs.python.org/library/logging.html
