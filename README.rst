@@ -37,7 +37,7 @@ unless specifically overridden in a section.
 
     [a_section]
     something = a_section_value
-    just_for_me = 5
+    just_for_me = 5.0
 
 To find out more about ini files and sections, check the Python standard
 library configparser_ documention.
@@ -149,28 +149,18 @@ INFO constants.load
 variable: __CONSTANTS__,
 filename: constants.ini,
 environment: a_section,
-constants: {'all': '1', 'something': 'a_section_value'}
+constants: {'all': '1', 'just_for_me': '5.0', 'something': 'a_section_value'}
 
 At DEBUG level it becomes a tad *noisier*.
 
 >>> logging.root.setLevel(logging.DEBUG)
->>> consts = constants.Constants() # doctest: +NORMALIZE_WHITESPACE
-DEBUG constants.__init__ begin
-DEBUG constants.load begin
-DEBUG constants.get_environment begin
-DEBUG constants.get_environment end
-DEBUG constants.read_config begin
-DEBUG constants.read_config end
-DEBUG constants.load_dict begin
-INFO constants.load
-     variable: __CONSTANTS__,
-     filename: constants.ini,
-     environment: a_section,
-     constants: {'all': '1', 'something': 'a_section_value'}
-DEBUG constants.load_dict end
-DEBUG constants.load end
-DEBUG constants.__init__ end
-
+>>> debug_me  = consts.just_for_me # doctest: +ELLIPSIS
+DEBUG constants.__getattr__ begin (..., 'just_for_me') {}
+DEBUG constants.__getitem__ begin (..., 'just_for_me') {}
+DEBUG constants.cast begin ('5.0',) {}
+DEBUG constants.cast end 5.0
+DEBUG constants.__getitem__ end 5.0
+DEBUG constants.__getattr__ end 5.0
 
 Installation
 ============

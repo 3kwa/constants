@@ -17,9 +17,12 @@ def debug(function):
     """
     @functools.wraps(function)
     def wrapper(*args, **kvargs):
-        logger.debug('begin', extra={'method': function.__name__})
+        logger.debug('begin %s %s',
+                     args,
+                     kvargs,
+                     extra={'method': function.__name__})
         result = function(*args, **kvargs)
-        logger.debug('end', extra={'method': function.__name__})
+        logger.debug('end %s', result, extra={'method': function.__name__})
         return result
     return wrapper
 
@@ -77,6 +80,7 @@ class Constants(object):
                     self.dict,
                     extra={'method': 'load'})
 
+    @debug
     def __getitem__(self, item):
         """
         access to environment specific constants in a dictionary manner
@@ -84,6 +88,7 @@ class Constants(object):
         """
         return self.cast(self.dict[item])
 
+    @debug
     def __getattr__(self, item):
         """
         syntactic sugar, .item rather than ['item']
@@ -91,6 +96,7 @@ class Constants(object):
         return self[item]
 
     @staticmethod
+    @debug
     def cast(string):
         """
         cast string to int, float or keep as string
@@ -112,6 +118,7 @@ class Constants(object):
             pass
         return string
 
+    @debug
     def __setitem__(self, item, value):
         """
         dict like assignment - warns when a constant is changed
@@ -120,6 +127,7 @@ class Constants(object):
             warnings.warn('{} changed to {}'.format(item, value))
         self.dict[item] = value
 
+    @debug
     def __setattr__(self, name, value):
         """
         attribute assignment - warns when a constant is changed
@@ -129,4 +137,3 @@ class Constants(object):
             self.dict[name] = value
         else:
             object.__setattr__(self, name, value)
-
