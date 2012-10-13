@@ -17,6 +17,9 @@ def debug(function):
     """
     @functools.wraps(function)
     def wrapper(*args, **kvargs):
+        """
+        wrap method call
+        """
         logger.debug('begin %s %s',
                      args,
                      kvargs,
@@ -30,6 +33,9 @@ VARIABLE = '__CONSTANTS__'
 FILENAME = 'constants.ini'
 
 class Constants(object):
+    """
+    Environement sensitive application constants class
+    """
 
     @debug
     def __init__(self, variable=VARIABLE, filename=FILENAME):
@@ -64,8 +70,8 @@ class Constants(object):
         returns a ConfigParser instance from self.filename
         """
         self.config = ConfigParser.ConfigParser()
-        with open(self.filename) as f:
-            self.config.readfp(f)
+        with open(self.filename) as config_file:
+            self.config.readfp(config_file)
 
     @debug
     def load_dict(self):
