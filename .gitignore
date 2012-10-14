@@ -1,4 +1,4 @@
-constants.pyc
+*.pyc
 MANIFEST
 dist
 __pycache__
