@@ -135,7 +135,7 @@ class Constants(object):
         dict like assignment - warns when a constant is changed
         """
         if item in self.dict:
-            warnings.warn('{} changed to {}'.format(item, value))
+            warnings.warn('{0} changed to {1}'.format(item, value))
         self.dict[item] = value
 
     @debug
@@ -144,7 +144,7 @@ class Constants(object):
         attribute assignment - warns when a constant is changed
         """
         if hasattr(self, 'dict') and name in self.dict:
-            warnings.warn('{} changed to {}'.format(name, value))
+            warnings.warn('{0} changed to {1}'.format(name, value))
             self.dict[name] = value
         else:
             object.__setattr__(self, name, value)
