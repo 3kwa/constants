@@ -3,7 +3,10 @@ constant.Constants - The simple way to deal with environment constants.
 """
 
 import os
-import ConfigParser
+try:
+    import ConfigParser as configparser
+except ImportError:
+    import configparser
 import warnings
 import logging
 import functools
@@ -44,6 +47,8 @@ class Constants(object):
         environment / config section from default to __CONSTANTS__
         filename is the config filename
         """
+        # in python 3 prevents an endless recursion getattr / getitem
+        object.__setattr__(self, 'dict', {})
         self.variable = variable
         self.filename = filename
         self.load()
@@ -69,7 +74,7 @@ class Constants(object):
         """
         returns a ConfigParser instance from self.filename
         """
-        self.config = ConfigParser.ConfigParser()
+        self.config = configparser.ConfigParser()
         with open(self.filename) as config_file:
             self.config.readfp(config_file)
 

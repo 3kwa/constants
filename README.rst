@@ -144,12 +144,12 @@ With the logging level set to INFO, it logs one and only one useful message.
 >>> logging.basicConfig(level=logging.INFO,
 ...                     stream=sys.stdout,
 ...                     format='%(levelname)s %(name)s.%(method)s %(message)s')
->>> consts = constants.Constants() # doctest: +NORMALIZE_WHITESPACE
+>>> consts = constants.Constants() # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
 INFO constants.load
 variable: __CONSTANTS__,
 filename: constants.ini,
 environment: a_section,
-constants: {'all': '1', 'just_for_me': '5.0', 'something': 'a_section_value'}
+constants: {...}
 
 At DEBUG level it becomes a tad *noisier*.
 
