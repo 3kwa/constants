@@ -47,7 +47,6 @@ class Constants(object):
         environment / config section from default to __CONSTANTS__
         filename is the config filename
         """
-        # in python 3 prevents an endless recursion getattr / getitem
         object.__setattr__(self, 'dict', {})
         self.variable = variable
         self.filename = filename
@@ -111,14 +110,9 @@ class Constants(object):
     def cast(string):
         """
         cast string to int, float or keep as string
-
-        >>> Constants.cast('1')
-        1
-        >>> Constants.cast('3.14')
-        3.14
-        >>> Constants.cast('a_string')
-        'a_string'
         """
+        if hasattr(string, 'startswith') and string.startswith('0'):
+            return string
         try:
             return int(string)
         except ValueError:

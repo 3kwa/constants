@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='constants',
-    version='0.4.1',
+    version='0.4.2',
     description='The simple way to deal with environment constants.',
     long_description=open('README.rst').read(),
     author='Eugene Van den Bulke',

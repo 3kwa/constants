@@ -34,6 +34,7 @@ unless specifically overridden in a section.
     [DEFAULT]
     something = a_default_value
     all =  1
+    a_string = 0350
 
     [a_section]
     something = a_section_value
@@ -85,10 +86,12 @@ To access the values, the instance can be used like a dictionary (getitem).
 >>> consts['something']
 'a_section_value'
 
-Values are cast into integer or float when possible.
+Values are cast into integer or float when pertinent.
 
 >>> consts['all']
 1
+>>> consts.a_string
+'0350'
 
 Values can also be accessed using the . operator (getattr)
 
