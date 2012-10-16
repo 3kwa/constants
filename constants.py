@@ -107,21 +107,21 @@ class Constants(object):
 
     @staticmethod
     @debug
-    def cast(string):
+    def cast(constant):
         """
         cast string to int, float or keep as string
         """
-        if hasattr(string, 'startswith') and string.startswith('0'):
-            return string
+        if hasattr(constant, 'startswith') and constant.startswith('0'):
+            return constant
         try:
-            return int(string)
+            return int(constant)
         except ValueError:
             pass
         try:
-            return float(string)
+            return float(constant)
         except ValueError:
             pass
-        return string
+        return constant
 
     @debug
     def __setitem__(self, item, value):
