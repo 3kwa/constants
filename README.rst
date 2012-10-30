@@ -3,9 +3,6 @@ constants
 =========
 
 
-The simple way to deal with environment constants!
-
-
 The problem?
 ============
 

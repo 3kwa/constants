@@ -14,6 +14,10 @@ class TestConstants(unittest.TestCase):
         result = constants.Constants.cast('3.14')
         self.assertEqual(3.14, result)
 
+    def test_float_cast_starting_with_0(self):
+        result = constants.Constants.cast('0.02')
+        self.assertEqual(0.02, result)
+
     def test_string_cast(self):
         result = constants.Constants.cast('a_string')
         self.assertEqual('a_string', result)

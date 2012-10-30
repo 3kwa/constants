@@ -111,7 +111,8 @@ class Constants(object):
         """
         cast string to int, float or keep as string
         """
-        if hasattr(constant, 'startswith') and constant.startswith('0'):
+        if hasattr(constant, 'startswith') and constant.startswith('0') \
+           and '.' not in constant:
             return constant
         try:
             return int(constant)
