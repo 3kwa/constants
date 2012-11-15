@@ -36,6 +36,8 @@ unless specifically overridden in a section.
     [a_section]
     something = a_section_value
     just_for_me = 5.0
+    flag = False
+    minutes = 365 * 24 * 60
 
 To find out more about ini files and sections, check the Python standard
 library configparser_ documention.
@@ -83,12 +85,19 @@ To access the values, the instance can be used like a dictionary (getitem).
 >>> consts['something']
 'a_section_value'
 
-Values are cast into integer or float when pertinent.
+Values are cast into integer, float or boolean when pertinent.
 
 >>> consts['all']
 1
 >>> consts.a_string
 '0350'
+>>> consts.flag
+False
+
+Expressions are evaluated.
+
+>>> consts.minutes
+525600
 
 Values can also be accessed using the . operator (getattr)
 

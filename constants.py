@@ -109,7 +109,7 @@ class Constants(object):
     @debug
     def cast(constant):
         """
-        cast string to int, float or keep as string
+        cast string to int, float, eval or keep as string
         """
         if hasattr(constant, 'startswith') and constant.startswith('0') \
            and '.' not in constant:
@@ -121,6 +121,10 @@ class Constants(object):
         try:
             return float(constant)
         except ValueError:
+            pass
+        try:
+            return eval(constant)
+        except (NameError, SyntaxError):
             pass
         return constant
 

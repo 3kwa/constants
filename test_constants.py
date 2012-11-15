@@ -25,3 +25,15 @@ class TestConstants(unittest.TestCase):
     def test_integer_with_leading_zero_not_cast(self):
         result = constants.Constants.cast('0350')
         self.assertEqual('0350', result)
+
+    def test_boolean(self):
+        result = constants.Constants.cast('True')
+        self.assertEqual(True, result)
+
+    def test_expression(self):
+        result = constants.Constants.cast('365 * 24 * 60')
+        self.assertEqual(525600, result)
+
+    def test_invalid_expression(self):
+        result = constants.Constants.cast('3 * 5 / 100 %')
+        self.assertEqual('3 * 5 / 100 %', result)
