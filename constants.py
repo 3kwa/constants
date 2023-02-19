@@ -3,6 +3,7 @@ constant.Constants - The simple way to deal with environment constants.
 """
 
 import os
+
 try:
     import ConfigParser as configparser
 except ImportError:
@@ -14,26 +15,28 @@ import functools
 
 logger = logging.getLogger(__name__)
 
+
 def debug(function):
     """
     logging debug decorator
     """
+
     @functools.wraps(function)
     def wrapper(*args, **kvargs):
         """
         wrap method call
         """
-        logger.debug('begin %s %s',
-                     args,
-                     kvargs,
-                     extra={'method': function.__name__})
+        logger.debug("begin %s %s", args, kvargs, extra={"method": function.__name__})
         result = function(*args, **kvargs)
-        logger.debug('end %s', result, extra={'method': function.__name__})
+        logger.debug("end %s", result, extra={"method": function.__name__})
         return result
+
     return wrapper
 
-VARIABLE = '__CONSTANTS__'
-FILENAME = 'constants.ini'
+
+VARIABLE = "__CONSTANTS__"
+FILENAME = "constants.ini"
+
 
 class Constants(object):
     """
@@ -47,7 +50,7 @@ class Constants(object):
         environment / config section from default to __CONSTANTS__
         filename is the config filename
         """
-        object.__setattr__(self, 'dict', {})
+        object.__setattr__(self, "dict", {})
         self.variable = variable
         self.filename = filename
         self.load()
@@ -82,13 +85,15 @@ class Constants(object):
         """
         load the config items into self.dict
         """
-        self.dict = dict (self.config.items(self.environment))
-        logger.info('variable: %s, filename: %s, environment: %s, constants: %s',
-                    self.variable,
-                    self.filename,
-                    self.environment,
-                    self.dict,
-                    extra={'method': 'load'})
+        self.dict = dict(self.config.items(self.environment))
+        logger.info(
+            "variable: %s, filename: %s, environment: %s, constants: %s",
+            self.variable,
+            self.filename,
+            self.environment,
+            self.dict,
+            extra={"method": "load"},
+        )
 
     @debug
     def __getitem__(self, item):
@@ -111,8 +116,11 @@ class Constants(object):
         """
         cast string to int, float, eval or keep as string
         """
-        if hasattr(constant, 'startswith') and constant.startswith('0') \
-           and '.' not in constant:
+        if (
+            hasattr(constant, "startswith")
+            and constant.startswith("0")
+            and "." not in constant
+        ):
             return constant
         try:
             return int(constant)
@@ -134,7 +142,7 @@ class Constants(object):
         dict like assignment - warns when a constant is changed
         """
         if item in self.dict:
-            warnings.warn('{0} changed to {1}'.format(item, value))
+            warnings.warn("{0} changed to {1}".format(item, value))
         self.dict[item] = value
 
     @debug
@@ -142,8 +150,8 @@ class Constants(object):
         """
         attribute assignment - warns when a constant is changed
         """
-        if hasattr(self, 'dict') and name in self.dict:
-            warnings.warn('{0} changed to {1}'.format(name, value))
+        if hasattr(self, "dict") and name in self.dict:
+            warnings.warn("{0} changed to {1}".format(name, value))
             self.dict[name] = value
         else:
             object.__setattr__(self, name, value)
